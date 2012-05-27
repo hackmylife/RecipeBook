@@ -1,0 +1,44 @@
+: cascade base
+: around content -> {
+<h1><: $c.stash.site_name :></h1>
+<p>Use this document as a way to quick start any new project.<br> All you get is this message and a barebones HTML document.</p>
+<div id="search">
+  <form action="search" method="GET" class="well form-search">
+  <input type="text" name="word" class="input-medium search-query" >
+  <button type="submit" class="btn">Search</button>
+</div>
+<div id="list">
+<ul class="unstyled">
+: for $recipes -> $recipe {
+  <li><img src="<: $recipe.image :>" class="left-image thumbnail"/>
+      <h2><: $recipe.title :></h2><a href="<: $recipe.uri :>"><: $recipe.uri :></a><br />
+      <p><: $recipe.description :></p>
+      <div class="ingredients">
+          <table class="table table-condensed">
+          <thead>
+          <tr>
+            <th>材料</th>
+            <th>分量</th>
+          </tr>
+          </thead>
+          <tbody>
+          : for $recipe.ingredients -> $ingredient {
+          <tr>
+              : if $ingredient.category {
+              <td colspan="2"><strong><: $ingredient.category :></strong></td>
+              : } else {
+              <td><: $ingredient.name :></td>
+              <td><: $ingredient.quantity :></td>
+              : }
+          </tr>
+          </tbody>
+          : }
+          </table>
+      </div>
+      <div class="clear"></div>
+  </li>
+: } # for
+</ul>
+</div>
+: }
+

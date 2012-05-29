@@ -1,8 +1,15 @@
 .left-image {
-    float: left;
     width: 180px;
     margin-right: 10px;
     margin-bottom: 20px;
+}
+
+.left {
+    float: left;
+}
+
+.center {
+    text-align: center;
 }
 
 .ingredients{

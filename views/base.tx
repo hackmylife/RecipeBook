@@ -3,6 +3,7 @@
 : block form |fillinform( $c.req ) -> {
 <head>
 <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RecipeBook</title>
 <link rel="shortcut icon" href="<: $c.req.uri_for('/favicon.ico') :>" type="image/vnd.microsoft.icon" />
 <link rel="stylesheet" href="<: $c.req.uri_for('/css/bootstrap.min.css') :>">
@@ -28,7 +29,7 @@ body {
 <div class="nav-collapse">
 <ul class="nav">
 <li class="active"><a href="<: $c.req.uri_for('/') :>">Search</a></li>
-<li><a href="/list">List</a></li>
+<li><a href="/list/">List</a></li>
 </ul>
 </div> <!--/.nav-collapse -->
 </div>
@@ -43,6 +44,38 @@ body {
 
 <script type="text/javascript" src="<: $c.req.uri_for('/js/jquery.min.js') :>"></script>
 <script type="text/javascript" src="<: $c.req.uri_for('/js/bootstrap.min.js') :>"></script>
+<script type="text/javascript">
+$(function(){
+  $('.store_btn').click(function () {
+    uri = $(this).attr('data-uri');
+    $.ajax({
+      type: 'POST',
+      url:  'add',
+      data: "uri=" + uri,
+      success: function(data) {
+          alert('リストに追加しました');
+          location.href = data.location;
+      },
+      dataType: 'json'
+    });
+    return false;
+  });
+  $('.remove_btn').click(function () {
+    uri = $(this).attr('data-uri');
+    $.ajax({
+      type: 'POST',
+      url:  '/remove',
+      data: "uri=" + uri,
+      success: function(data) {
+          alert('リストから削除しました');
+          location.href = data.location;
+      },
+      dataType: 'json'
+    });
+    return false;
+  });
+});
+</script>
 </body>
 : }
 </html>

@@ -1,7 +1,11 @@
 : cascade base
 : around content -> {
 <h1><: $c.stash.site_name :></h1>
-<p>Use this document as a way to quick start any new project.<br> All you get is this message and a barebones HTML document.</p>
+<p>Cookpadからレシピを検索するお手伝い！</p>
+: if $stash.list_id {
+<p>登録されたレシピがあります&nbsp;&nbsp;<a href="<: $c.req.uri_for('list/' ~ $stash.list_id) :>"><: $c.req.uri_for('list/' ~ $stash.list_id) :></a></p>
+<p>登録されたレシピがあります&nbsp;&nbsp;<a href="<: $c.req.uri_for('list/' ~ $stash.list_id) :>"><: $c.req.uri_for('list/', ['word', 'hoge']) :></a></p>
+: }
 <div id="search">
   <form action="search" method="GET" class="well form-search">
   <input type="text" name="word" class="input-medium search-query" >
@@ -10,7 +14,10 @@
 <div id="list">
 <ul class="unstyled">
 : for $recipes -> $recipe {
-  <li><img src="<: $recipe.image :>" class="left-image thumbnail"/>
+  <li><div class="left">
+        <img src="<: $recipe.image :>" class="left-image thumbnail"/>
+        <button type="button" class="btn center store_btn" data-uri="<: $recipe.uri :>">作る物リストに追加</button>
+      </div>
       <h2><: $recipe.title :></h2><a href="<: $recipe.uri :>"><: $recipe.uri :></a><br />
       <p><: $recipe.description :></p>
       <div class="ingredients">

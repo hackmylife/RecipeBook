@@ -1,11 +1,7 @@
 .left-image {
-    width: 180px;
+    width: 200px;
     margin-right: 10px;
     margin-bottom: 20px;
-}
-
-.left {
-    float: left;
 }
 
 .center {
@@ -13,7 +9,6 @@
 }
 
 .ingredients{
-   width: 400px;
    float: left;
 }
 

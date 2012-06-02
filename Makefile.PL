@@ -14,6 +14,7 @@ WriteMakefile(
         'HTTP::Session::State::Cookie' => 0,
         'Web::Scraper' => 0,
         'Web::Scraper::LibXML' => 0,
+        'HTML::TreeBuilder::LibXML' => 0,
     },
     MIN_PERL_VERSION => '5.008001'
 );

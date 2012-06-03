@@ -14,7 +14,7 @@
       <div class="row-fluid">
         <div class="span3">
           <img src="<: $recipe.image :>" class="left-image thumbnail"/>
-          <button type="button" class="btn center store_btn" data-uri="<: $recipe.uri :>">作る物リストに追加</button>
+          <button type="button" class="btn center remove_btn" data-uri="<: $recipe.uri :>">作る物リストから削除</button>
         </div>
         <div class="span9">
           <h2><: $recipe.title :></h2><a href="<: $recipe.uri :>"><: $recipe.uri :></a><br />

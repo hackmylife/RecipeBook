@@ -25,7 +25,8 @@ sub get_session {
             }),
         ),
         state   => HTTP::Session::State::Cookie->new(
-            cookie_key => 'recipe_book_sid'
+            name => 'recipe_book_sid',
+            domain => 'hakumain.net',
         ),
         request => $c->req,
     );

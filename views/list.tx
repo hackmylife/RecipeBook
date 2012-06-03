@@ -6,19 +6,21 @@
   <form action="/search" method="GET" class="well form-search">
   <input type="text" name="word" class="input-medium search-query" >
   <button type="submit" class="btn">Search</button>
+  </form>
 </div>
 <div id="list">
+<button type="button" class="btn toggle_recipe">材料のみ表示切り替え</button>
 <ul class="unstyled">
 : for $stash.recipes -> $recipe {
   <li>
       <div class="row-fluid">
-        <div class="span3">
+        <div class="span3 hidable">
           <img src="<: $recipe.image :>" class="left-image thumbnail"/>
           <button type="button" class="btn center remove_btn" data-uri="<: $recipe.uri :>">作る物リストから削除</button>
         </div>
         <div class="span9">
           <h2><: $recipe.title :></h2><a href="<: $recipe.uri :>"><: $recipe.uri :></a><br />
-          <p><: $recipe.description :></p>
+          <p class="hidable"><: $recipe.description :></p>
           <div class="ingredients">
             <table class="table table-condensed">
               <thead>

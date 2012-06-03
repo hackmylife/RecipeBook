@@ -28,8 +28,6 @@ body {
 <a class="brand" href="<: $c.req.uri_for('/') :>">RecipeBook</a>
 <div class="nav-collapse">
 <ul class="nav">
-<li class="active"><a href="<: $c.req.uri_for('/') :>">Search</a></li>
-<li><a href="/list/">List</a></li>
 </ul>
 </div> <!--/.nav-collapse -->
 </div>
@@ -73,6 +71,9 @@ $(function(){
       dataType: 'json'
     });
     return false;
+  });
+  $('.toggle_recipe').click(function () {
+      $('.hidable').toggle();
   });
 });
 </script>

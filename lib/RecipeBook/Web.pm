@@ -69,13 +69,17 @@ get '/search' => [qw/set_title/] => sub {
     if ( $result->has_error ) {
         return $c->render_json({ error => 1, messages => $result->errors });
     }
-    my $search = Google::Search->Web( query => $result->valid('word') . ' site:cookpad.com' );
+
+    my $search = Google::Search->Web( query => $result->valid('word') . ' site:cookpad.com/recipe -モバれぴ' );
+    if ( $search->error ) {
+        return $c->render_json({ error => 1, messages => $search->error->http_response->as_string });
+    }
 
     my @recipes;
     my $count = 0;
     my $cache = $self->cache;
     while ( my $result = $search->next ) {
-        next unless $result->uri =~ m|http://cookpad.com/recipe/|;
+        #next unless $result->uri =~ m|http://cookpad.com/recipe/|;
         my $key = substr Digest::SHA::sha1_hex( $result->uri ), 0, 16;
         my $item = $cache->get($key);
         unless ( $item ) {
@@ -84,7 +88,7 @@ get '/search' => [qw/set_title/] => sub {
         }
         push @recipes, $item;
         $count++;
-        last if $count >= 2;
+        last if $count >= 10;
     }
     $c->render('index.tx', { recipes => \@recipes });
 };

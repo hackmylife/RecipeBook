@@ -18,7 +18,7 @@ our $EXPIRE = 60 * 60 * 24; #1day
 
 sub get_session {
     my ($self, $c) = @_;
-    $self->{_session} ||= HTTP::Session->new(
+    HTTP::Session->new(
         store   => HTTP::Session::Store::Memcached->new(
             memd => Cache::Memcached::Fast->new({
                 servers => ['127.0.0.1:11211'],
@@ -26,7 +26,6 @@ sub get_session {
         ),
         state   => HTTP::Session::State::Cookie->new(
             name => 'recipe_book_sid',
-            domain => 'hakumain.net',
         ),
         request => $c->req,
     );
@@ -38,6 +37,8 @@ sub cache {
       servers => ['localhost:11211'],
     });
 }
+
+sub finalize { warn "final!!" };
 
 filter 'set_title' => sub {
     my $app = shift;
@@ -108,6 +109,8 @@ post '/add' => [qw/set_title/] => sub {
     push @$list, $result->valid('uri');
     $list = $cache->set($id, $list, $EXPIRE);
     $session->set("list_id", $id);
+    $session->response_filter( $c->res );
+    $session->finalize();
     $c->render_json({ error => 0, messages => 'stored', location => $c->req->uri_for("/list/")->as_string() });
 };
 
@@ -130,7 +133,6 @@ post '/remove' => [qw/set_title/] => sub {
     my $list = $cache->get($id) || ();
     my @new_list = grep { $_ ne $result->valid('uri') } @$list;
     $list = $cache->set($id, \@new_list, $EXPIRE);
-    $session->set("list_id", $id);
     $c->render_json({ error => 0, messages => 'stored', location => $c->req->uri_for("/list/")->as_string() });
 };
 

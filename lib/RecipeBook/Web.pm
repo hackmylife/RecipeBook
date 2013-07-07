@@ -75,22 +75,22 @@ get '/search' => [qw/set_title/] => sub {
         return $c->render_json({ error => 1, messages => $search->error->http_response->as_string });
     }
 
-    my @recipes;
+    my @urls;
     my $count = 0;
-    my $cache = $self->cache;
+#    my $cache = $self->cache;
     while ( my $result = $search->next ) {
         #next unless $result->uri =~ m|http://cookpad.com/recipe/|;
-        my $key = substr Digest::SHA::sha1_hex( $result->uri ), 0, 16;
-        my $item = $cache->get($key);
-        unless ( $item ) {
-            $item = RecipeBook::Parser::Cookpad->parse( $result->uri );
-            $cache->set($key, $item, $EXPIRE); #1day
-        }
-        push @recipes, $item;
+#        my $key = substr Digest::SHA::sha1_hex( $result->uri ), 0, 16;
+#        my $item = $cache->get($key);
+#        unless ( $item ) {
+#            $cache->set($key, $item, $EXPIRE); #1day
+#        }
+        push @urls, $result->uri;
         $count++;
         last if $count >= 10;
     }
-    $c->render('index.tx', { recipes => \@recipes });
+    my $recipes = RecipeBook::Parser::Cookpad->parse( \@urls );
+    $c->render('index.tx', { recipes => $recipes });
 };
 
 post '/add' => [qw/set_title/] => sub {

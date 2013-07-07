@@ -15,6 +15,8 @@ WriteMakefile(
         'Web::Scraper' => 0,
         'Web::Scraper::LibXML' => 0,
         'HTML::TreeBuilder::LibXML' => 0,
+        'AnyEvent::HTTP::LWP::UserAgent' => 0,
+        'Coro' => 0,
     },
     MIN_PERL_VERSION => '5.008001'
 );

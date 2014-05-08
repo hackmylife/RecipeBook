@@ -1,7 +1,7 @@
 : cascade base
 : around content -> {
 <h1><: $c.stash.site_name :></h1>
-<p>Cookpadからレシピを検索するお手伝い！</p>
+<p>Cookpadからレシピを検索するお手伝い！ </p>
 : if $stash.list_id {
 <p>登録されたレシピがあります&nbsp;&nbsp;<a href="<: $c.req.uri_for('list/' ~ $stash.list_id) :>"><: $c.req.uri_for('list/' ~ $stash.list_id) :></a></p>
 : }
